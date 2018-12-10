@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using XRayBuilderGUI.Unpack.Mobi;
 
 namespace XRayBuilderGUI.Unpack
@@ -9,7 +10,20 @@ namespace XRayBuilderGUI.Unpack
         {
             var fs = new FileStream(file, FileMode.Open, FileAccess.Read);
 
-            return new Metadata(fs);
+            IMetadata metadata = null;
+            switch (Path.GetExtension(file))
+            {
+                case ".azw3":
+                case ".mobi":
+                    metadata = new Metadata(fs);
+                    break;
+                case ".kfx":
+                    break;
+                default:
+                    throw new NotSupportedException("Unsupported book format");
+            }
+
+            return metadata;
         }
     }
 }
