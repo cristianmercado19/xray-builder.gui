@@ -819,7 +819,7 @@ namespace XRayBuilderGUI.UI
                 MessageBox.Show(@"Specified output directory does not exist.\r\nPlease review the settings page.", @"Output Directory Not found");
                 return;
             }
-            var metadata = await Task.Run(() => new Metadata(txtMobi.Text)).ConfigureAwait(false);
+            var metadata = await Task.Run(() => MetadataLoader.Load(txtMobi.Text)).ConfigureAwait(false);
             if (metadata != null)
             {
                 _logger.Log("Extracted rawml successfully!\r\n");
